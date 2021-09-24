@@ -19,13 +19,12 @@
 		$name=$data[0];
 		$text=file('https://tw.stock.yahoo.com/q/q?s='.$id.$time);
 		foreach ($text as $line_num => $line) {
-			if (preg_match("/><b>/i", $line))
+			if (strpos($line,'<span class="Fz(32px) Fw(b) Lh(1) Mend(16px) D(f) Ai(c)') !== false)
 			{
-				$a='<td align="center" bgcolor="#FFFfff" nowrap><b>';
-				$b='</b></td>';
-				//str_replace (取代前的字串,取代後字串,要取代的字串);
-				$line=str_replace ($b,'',str_replace ($a,'',$line));
-				Printf_n($name.'['.$id.']'."\t".$line);
+				$replace_example00 = explode('<span class="Fz(32px) Fw(b) Lh(1) Mend(16px) D(f) Ai(c)',$line);
+				$replace_example01 = str_replace(array(">","<"),'_',$replace_example00[1]);
+				$replace_example02 = explode('_',$replace_example01);
+				Printf_n($name.'['.$id.']'."\t".$replace_example02[1]);
 			} 
 		}
 	}
